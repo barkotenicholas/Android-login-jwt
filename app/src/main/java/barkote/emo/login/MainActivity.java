@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     public ProgressDialog progressBar;
 
     public Helper helper;
+
+    public Data data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,10 +103,11 @@ public class MainActivity extends AppCompatActivity {
                     assert results != null;
 
 
-                    Data data = results.getData();
+                   data  = results.getData();
 
+                    helper.savetoken(data.getToken(),getApplicationContext());
+                    Toast.makeText(MainActivity.this,"Token " + data.getToken() ,Toast.LENGTH_LONG).show();
 
-                    helper.savetoken(data.getToken());
                     startActivity(new Intent(MainActivity.this,Home.class));
                 }
 

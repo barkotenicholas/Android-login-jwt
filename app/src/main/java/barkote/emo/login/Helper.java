@@ -2,32 +2,37 @@ package barkote.emo.login;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import static android.content.Context.MODE_PRIVATE;
 
-public class Helper {
-    public SharedPreferences.Editor editor;
+public class    Helper {
     public SharedPreferences pref;
+    public Context ctx;
 
     public Helper(Context ctx) {
-        pref  = ctx.getSharedPreferences("MyPref", MODE_PRIVATE);
-      editor = pref.edit();
+        this.ctx = ctx;
+        pref = ctx.getSharedPreferences("pref",Context.MODE_PRIVATE);
     }
 
-    public void savetoken(String Token)
+    public void savetoken(String Token,Context ctx)
     {
+         SharedPreferences.Editor editor;
+
+
+        editor = pref.edit();
         editor.putBoolean("loggedin", true); // Storing boolean - true/false
         editor.putString("token", Token); // Storing string
 
+        editor.commit();
     }
 
-    public String getToken()
+    public String getToken(Context ctx)
     {
-
+        SharedPreferences.Editor editor;
         return pref.getString("token", null);
     }
 
-    public boolean isloggedin()
+    public boolean isloggedin(Context ctx)
     {
 
         return pref.getBoolean("loggedin",false);
@@ -35,8 +40,13 @@ public class Helper {
     }
     public void logout()
     {
+        SharedPreferences.Editor editor;
+
+
+        editor = pref.edit();
+
         editor.clear();
-        editor.commit(); // commit changes
+        editor.commit();
     }
 
 
